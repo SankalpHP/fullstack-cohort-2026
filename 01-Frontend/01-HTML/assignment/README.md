@@ -14,12 +14,9 @@ This folder contains an HTML assignment focused on building a basic resume layou
   - Tables (Experience, Education)
   - Lists (Skills, Projects)
   - Semantic elements (`header`, `section`, `main`, `footer`)
+- **Demo**
+  - 👉 [Open Resume HTML](https://sankalphp.github.io/fullstack-cohort-2026/01-Frontend/01-HTML/assignment/01-resume.html)
 
----
-
-## 🔗 View File
-
-👉 [Open Resume HTML](./01-resume.html)
 
 ---
 
