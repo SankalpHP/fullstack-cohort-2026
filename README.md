@@ -10,7 +10,7 @@ The repository will be **updated gradually** as I progress through the cohort an
 ## 📂 Current Structure
 
 - 01_HTML
-  - [01_Resume](01-Frontend/01-HTML/assignment/01-resume.html)
+  - [assignment](01-Frontend/01-HTML/assignment)
 
 
 ## 📍 Author
