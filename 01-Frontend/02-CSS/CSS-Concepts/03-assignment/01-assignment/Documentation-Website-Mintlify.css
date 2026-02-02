@@ -1,0 +1,61 @@
+:root{
+    --white:#fff;
+}
+
+body{
+    background-color:#08090B;
+    background-image: url(northen-light.jpg);
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: medium;
+    color: var(--white);
+
+    div #logo{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    div ul{
+        display: flex;
+        flex-direction:row;
+        list-style-type: none;
+        li{
+            margin-top: 5px;
+            margin-right: 5px;
+            margin-left: 5px;
+            a{
+                text-decoration: none;
+                color: var(--white);
+            }
+        }
+    }
+
+    div button{
+        padding: 4.5px 12px;
+        border-radius: 14px;
+        font-size: 15px;
+        border: none;
+    }
+
+    div button:focus{
+        outline: none;
+        box-shadow: none;
+    }
+
+    div #contact{
+        background: lab(100 0 0/0.05);
+        color: #fff;
+    }
+
+    div #start{
+        background: lab(100 0 0);
+    }
+}
