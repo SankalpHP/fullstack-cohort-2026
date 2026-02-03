@@ -5,6 +5,9 @@
 body{
     background-color:#08090B;
     background-image: url(northen-light.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     padding-left: 60px;
     padding-right: 60px;
 }
@@ -17,20 +20,14 @@ body{
     font-size: medium;
     color: var(--white);
 
-    div #logo{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
     div ul{
         display: flex;
         flex-direction:row;
         list-style-type: none;
         li{
             margin-top: 5px;
-            margin-right: 5px;
-            margin-left: 5px;
+            margin-right: 8px;
+            margin-left: 8px;
             a{
                 text-decoration: none;
                 color: var(--white);
@@ -58,4 +55,57 @@ body{
     div #start{
         background: lab(100 0 0);
     }
+}
+
+#logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    p{
+        font-size: 25px;
+    }
+}
+
+.hero{
+    padding-top: 20px;
+}
+.new{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    div{
+        display: flex;
+        gap: 5px;
+        border-radius: 50px;
+        padding: 0px 20px;
+        font-size: 14px;
+        align-items: center;
+        background: lab(100 0 0/0.05);
+        color: #fff;
+
+        #new{
+            background-color: #18E299;
+            padding: 0px 10px;
+            color: #08090B;
+            border-radius: 20px;
+        }
+    }
+}
+
+.heading{
+    text-align: center;
+    color: lab(100 0 0);
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.subheading{
+    text-align: center;
+    color: lab(100 0 0);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 8px
 }
