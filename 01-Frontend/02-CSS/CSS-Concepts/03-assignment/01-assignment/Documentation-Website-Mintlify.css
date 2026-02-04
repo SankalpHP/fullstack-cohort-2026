@@ -109,3 +109,131 @@ body{
     font-weight: 500;
     line-height: 8px
 }
+
+.form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 35px;
+
+    form{
+        padding: 5px 10px;
+        border-radius: 10px;
+    }
+
+    input{
+        border-style: none;
+        background-color: lab(100 0 0/0.15);
+        width: 300px;
+        padding: 10px;
+        border-radius: 30px;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+
+    button{
+        padding: 8px 16px;
+        border-radius: 30px;
+        border-style: none;
+        font-weight: 600;
+    }
+}
+
+.documentation{
+    margin-top: 60px;
+    div{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        img{
+            border-radius: 20px;
+        }
+    }
+}
+
+.companies{
+    margin-top: 40px;
+    div{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        img{
+            border-radius: 20px;
+        }
+    }
+}
+
+.feature-heading{
+    margin-top: 80px;
+    line-height: 24px;
+    text-align: center;
+    h1{
+        color: lab(100 0 0);
+         font-size: 42px;
+    }
+    p{
+        color: lab(100 0 0 / 0.7);
+        font-size: 18px;
+    }
+}
+
+.feature{
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    gap: 25px;
+    margin-top: 45px;
+
+    .feature-1, .feature-2{
+        border:1px solid lab(100 0 0 / 0.7);
+        border-radius: 20px;
+        background-color: #08090B;
+        padding: 25px;
+    }
+
+    .tech{
+        color: #18e299;
+        font-size: 12px;
+    }
+
+    h1{
+        color: lab(100 0 0);
+        font-size: 24px;
+    }
+
+    p{
+        color: lab(100 0 0 / 0.7);
+        font-size: 16px;
+    }
+}
+
+.main-feature{
+    border:1px solid lab(100 0 0 / 0.7);
+    border-radius: 20px;
+    background-color: #08090B;
+    padding: 25px;
+    width: 1080px;
+    justify-self: center;
+    text-align: center;
+    margin-top: 25px;
+
+    .tech{
+        color: #18e299;
+        font-size: 12px;
+    }
+
+    h1{
+        color: lab(100 0 0);
+        font-size: 24px;
+    }
+
+    p{
+        color: lab(100 0 0 / 0.7);
+        font-size: 16px;
+    }
+}
