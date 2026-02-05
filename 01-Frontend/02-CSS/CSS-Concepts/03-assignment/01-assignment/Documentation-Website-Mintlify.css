@@ -224,7 +224,7 @@ body{
 
     .tech{
         color: #18e299;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     h1{
@@ -235,5 +235,37 @@ body{
     p{
         color: lab(100 0 0 / 0.7);
         font-size: 16px;
+    }
+}
+
+.Enterprise{
+    display: flex;
+    justify-self: center;
+    gap: 400px;
+    margin-top: 60px;
+    .tech{
+        color: #18e299;
+        font-size: 16px;
+    }
+    h1{
+        color: lab(100 0 0);
+        font-size: 34px;
+        font-weight: 700;
+    }
+    div{
+        p{
+            color:lab(100 0 0 / 0.7);
+            font-size: 16px;
+        }
+    }
+    .enterprise-btn{
+        padding-top: 145px;
+        button{
+            background-color: lab(100 0 0);
+            padding: 10px 24px;
+            font-weight: 600;
+            color: lab(2.42759 -0.165291 -0.470081);
+            border-radius: 20px;
+        }
     }
 }
