@@ -19,6 +19,7 @@ body{
     align-items: center;
     font-size: medium;
     color: var(--white);
+    font-weight: bold;
 
     div ul{
         display: flex;
@@ -243,11 +244,13 @@ body{
     padding-top: 25px;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 55px;
     margin-top: 60px;
-    width: 1120px;
+    width: 1110px;
     justify-self: center;
     border:1px solid lab(100 0 0 / 0.7);
     border-radius: 20px;
+    /* height: 3000px; */
 }
 
 .Enterprise{
@@ -314,5 +317,68 @@ body{
     img{
        border-radius: 20px;
        margin-top: 50px;
+    }
+
+    div{
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       gap: 45px;
+       margin-top: 30px;
+
+       button{
+          background-color: #08090B;
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          font-size: 35px;
+       }
+    }
+}
+
+.customer{
+    border: 1px solid lab(100 0 0);
+    padding: 20px 0px;
+    width: 1125px;
+    margin-top: 90px;
+    justify-items: center;
+    justify-self: center;
+    background-color: #08090B;
+    border-radius: 20px;
+    div{
+        .tech{
+            color: #18e299;
+            font-size: 16px;
+            text-align: center;
+        }
+        h1{
+            color: lab(100 0 0);
+            font-size: 34px;
+            font-weight: 700;
+        }
+        p{
+            color:lab(100 0 0 / 0.7);
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+    .bar{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        .card{
+            img{
+                width: 350px;
+                border-radius: 20px;
+            }
+            p{
+                text-align: start;
+                width: 350px;                /* Required: container width */
+                white-space: nowrap;         /* Required: prevents wrapping */
+                overflow: hidden;            /* Required: hides extra text */
+                text-overflow: ellipsis;     /* Required: adds '...' */
+            }
+        }
     }
 }
