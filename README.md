@@ -13,8 +13,8 @@ The repository will be **updated gradually** as I progress through the cohort an
   - [assignment](01-Frontend/01-HTML/assignment)
 - 02_CSS
   - [flex-box](01-Frontend/02-CSS/CSS-Concepts/01-flex-box)
-  - [flex-box](01-Frontend/02-CSS/CSS-Concepts/02-grid)
-  - [flex-box](01-Frontend/02-CSS/CSS-Concepts/03-assignment)
+  - [grid](01-Frontend/02-CSS/CSS-Concepts/02-grid)
+  - [assignment](01-Frontend/02-CSS/CSS-Concepts/03-assignment)
 
 
 ## 📍 Author
