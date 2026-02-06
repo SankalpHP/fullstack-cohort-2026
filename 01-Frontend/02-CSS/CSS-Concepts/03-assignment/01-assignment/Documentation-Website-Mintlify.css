@@ -8,6 +8,8 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 
 header main{
@@ -387,6 +389,7 @@ header main{
 }
 
 .documentation{
+    margin-top: 70px;
     border: 1px solid lab(100 0 0);
     width: 1120px;
     justify-self: center;
@@ -426,5 +429,77 @@ header main{
         background-color: lab(2.42759 -0.165291 -0.470081);
         color: lab(100 0 0); 
         border: 1px solid lab(100 0 0);
+    }
+}
+
+.pricing{
+    display: flex;
+    justify-self: center;
+
+    .vertical-line {
+        border-left: 1px solid lab(100 0 0); /* Creates a solid black line 3px thick */
+        height: 200px;              /* Sets the length of the line */
+    }
+    .vertical-line, .card{
+        margin-top: 50px;
+    }
+    .card{
+        text-align: center;
+        padding: 32px;
+        color: lab(100 0 0);
+        line-height: 10px;
+        h4{
+            font-size: 20px;
+        }
+        p{
+            font-size: 16px;
+        }
+        a{
+            color: white;
+            text-decoration: none;
+            color: #18E299;
+            font-weight: 600;
+        }
+    }
+}
+
+footer{
+    margin-top: 30px;
+    background-color: black;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 40px;
+    justify-items: center;
+    .footer-nav{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 850px;
+    }
+    .mintify_svg{
+        color: lab(100 0 0);
+        display: flex;
+        align-items: center;
+        font-size: 28px;
+        font-weight: 800;
+    }
+}
+
+.footer-mid{
+    display: flex;
+    flex-direction: row;
+    gap: 130px;
+    .links{
+        display: flex;
+        flex-direction: column;
+        line-height: 35px;
+        h3, a{
+            color: lab(100 0 0);
+        }
+        a{
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
     }
 }
