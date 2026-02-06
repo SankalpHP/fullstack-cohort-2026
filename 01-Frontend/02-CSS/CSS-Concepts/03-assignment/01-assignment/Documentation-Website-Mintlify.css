@@ -238,11 +238,23 @@ body{
     }
 }
 
+.Enterprise-Section{
+    background-color: #08090B;
+    padding-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 60px;
+    width: 1120px;
+    justify-self: center;
+    border:1px solid lab(100 0 0 / 0.7);
+    border-radius: 20px;
+}
+
 .Enterprise{
     display: flex;
     justify-self: center;
-    gap: 400px;
-    margin-top: 60px;
+    gap: 300px;
+
     .tech{
         color: #18e299;
         font-size: 16px;
@@ -267,5 +279,40 @@ body{
             color: lab(2.42759 -0.165291 -0.470081);
             border-radius: 20px;
         }
+    }
+}
+
+.Feature-blocks{
+    display: flex;
+    justify-self: center;
+    gap: 225px;
+    margin-top: 70px;
+
+    svg{
+        width: 32px;
+        height: 32px;
+    }
+    div{
+        h1{
+            color: lab(100 0 0);
+            font-size: 34px;
+            font-weight: 700;
+        }
+        p{
+            color:lab(100 0 0 / 0.7);
+            font-size: 16px;
+        }
+    }
+}
+
+.customers-img{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    width: 1050px;
+
+    img{
+       border-radius: 20px;
+       margin-top: 50px;
     }
 }
