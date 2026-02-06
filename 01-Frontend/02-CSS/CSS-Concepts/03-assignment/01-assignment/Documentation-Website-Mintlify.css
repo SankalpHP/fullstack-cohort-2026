@@ -22,7 +22,7 @@ header main{
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    font-size: medium;
+    font-size: 20px;
     color: var(--white);
     font-weight: bold;
 
@@ -42,9 +42,8 @@ header main{
     }
 
     div button{
-        padding: 4.5px 12px;
         border-radius: 14px;
-        font-size: 15px;
+        font-size: 20px;
         border: none;
     }
 
@@ -56,10 +55,13 @@ header main{
     div #contact{
         background: lab(100 0 0/0.05);
         color: #fff;
+        font-size: 20px;
+        padding: 6px 15px;
     }
 
     div #start{
         background: lab(100 0 0);
+        padding: 4.5px 12px;
     }
 }
 
@@ -464,7 +466,7 @@ header main{
 }
 
 footer{
-    margin-top: 30px;
+    margin-top: 70px;
     background-color: black;
     padding-left: 60px;
     padding-right: 60px;
@@ -489,6 +491,7 @@ footer{
     display: flex;
     flex-direction: row;
     gap: 130px;
+    padding-bottom: 50px;
     .links{
         display: flex;
         flex-direction: column;
