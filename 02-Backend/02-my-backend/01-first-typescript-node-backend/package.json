@@ -6,13 +6,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm\" src/server.ts"
+    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm\" src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.3.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

@@ -2,11 +2,18 @@
 |--------------------------------------------------------------------------
 | Import Express Types
 |--------------------------------------------------------------------------
-| Request  → Represents the incoming HTTP request
-| Response → Represents the HTTP response sent back to the client
+| The Express framework provides Request and Response objects that
+| represent the incoming HTTP request and the outgoing HTTP response.
 |
-| Using these types improves TypeScript safety when accessing
-| req.body, req.params, res.status(), etc.
+| Using TypeScript types helps:
+| - provide IntelliSense while coding
+| - ensure type safety
+| - prevent runtime errors when accessing request properties
+|
+| Example:
+| req.body      → request payload
+| req.params    → route parameters
+| req.query     → query string parameters
 */
 import { Request, Response } from "express";
 
@@ -15,9 +22,17 @@ import { Request, Response } from "express";
 |--------------------------------------------------------------------------
 | Import Service Layer
 |--------------------------------------------------------------------------
-| The UserService contains the business logic for handling users.
-| Controllers should not contain business logic themselves; instead,
-| they delegate operations to the service layer.
+| The service layer contains the business logic of the application.
+|
+| Controllers should NOT contain business logic because:
+| - it makes the controller harder to maintain
+| - logic becomes duplicated across routes
+|
+| Instead the controller only:
+| 1. Receives HTTP requests
+| 2. Validates the input
+| 3. Calls the service
+| 4. Sends the response
 */
 import { UserService } from "../services/user.service.js";
 
@@ -26,9 +41,12 @@ import { UserService } from "../services/user.service.js";
 |--------------------------------------------------------------------------
 | Import Validation Schema
 |--------------------------------------------------------------------------
-| The Zod schema validates incoming request data before it reaches
-| the business logic. This prevents invalid data from entering the
-| application.
+| Zod is used for request validation.
+|
+| The schema ensures the request body contains valid data before
+| reaching the service layer.
+|
+| This prevents invalid or malicious data from entering the system.
 */
 import { createUserSchema } from "../validators/user.validator.js";
 
@@ -37,8 +55,10 @@ import { createUserSchema } from "../validators/user.validator.js";
 |--------------------------------------------------------------------------
 | Import Zod Error Class
 |--------------------------------------------------------------------------
-| ZodError is thrown when validation fails. We catch this error
-| to send a meaningful response back to the client.
+| Zod throws a ZodError whenever validation fails.
+|
+| We catch this specific error to return a proper HTTP response
+| with validation details instead of a generic server error.
 */
 import { ZodError } from "zod";
 
@@ -47,14 +67,20 @@ import { ZodError } from "zod";
 |--------------------------------------------------------------------------
 | User Controller Class
 |--------------------------------------------------------------------------
-| The controller layer is responsible for:
+| Controllers are responsible for handling HTTP requests and
+| coordinating between routes and services.
 |
-| - Handling HTTP requests
-| - Validating incoming data
-| - Calling the service layer
-| - Sending responses to the client
+| Responsibilities:
+| - Receive HTTP request
+| - Validate request data
+| - Call service methods
+| - Send appropriate HTTP responses
 |
-| It acts as the bridge between Express routes and the service layer.
+| Controllers SHOULD NOT:
+| - directly interact with database
+| - contain heavy business logic
+|
+| This keeps the architecture clean and maintainable.
 */
 export class userController {
 
@@ -62,8 +88,12 @@ export class userController {
     |--------------------------------------------------------------------------
     | Service Instance
     |--------------------------------------------------------------------------
-    | We create an instance of the UserService so the controller can
-    | access business logic methods like creating or retrieving users.
+    | Here we create an instance of the UserService class so the
+    | controller can call the business logic methods.
+    |
+    | This instance will handle operations such as:
+    | - creating a user
+    | - retrieving users
     */
     private user = new UserService();
 
@@ -72,56 +102,78 @@ export class userController {
     |--------------------------------------------------------------------------
     | Create User Controller
     |--------------------------------------------------------------------------
-    | Handles HTTP POST requests to create a new user.
-    |
-    | Request Example:
+    | Endpoint:
     | POST /user
     |
-    | Body:
+    | Purpose:
+    | Creates a new user in the database.
+    |
+    | Example Request Body:
+    |
     | {
     |   "id": 1,
     |   "name": "Sankalp Selokar",
     |   "email": "sankalp@gmail.com"
     | }
     |
-    | Process:
-    | 1. Validate request body using Zod schema
-    | 2. If valid, call the service layer to create the user
-    | 3. Send the created user as a JSON response
+    | Execution Flow:
     |
-    | Arrow Function:
-    | Arrow functions ensure `this` always refers to the class
-    | instance when used inside Express routing.
+    | Client Request
+    |      ↓
+    | Route Layer
+    |      ↓
+    | Controller (this method)
+    |      ↓
+    | Zod Validation
+    |      ↓
+    | Service Layer
+    |      ↓
+    | Database (MongoDB)
+    |      ↓
+    | Response Sent Back to Client
+    |
+    | Arrow Function Note:
+    | Arrow functions preserve `this` context when used inside
+    | Express routing, preventing common binding issues.
     */
     createUser = async (req: Request, res: Response) => {
+
         try {
 
             /*
             --------------------------------------------------------------
-            Validate Incoming Request
+            Step 1: Validate Incoming Request
             --------------------------------------------------------------
-            parseAsync() checks the request body against the Zod schema.
-            If validation fails, a ZodError is thrown.
+            Zod validates the request body against the defined schema.
+            If validation fails, Zod throws an error.
             */
             let isValid = await createUserSchema.parseAsync(req.body);
 
 
             /*
             --------------------------------------------------------------
-            Call Service Layer
+            Step 2: Call Service Layer
             --------------------------------------------------------------
-            If validation succeeds, we pass the validated data
-            to the service layer which handles user creation.
+            The validated data is passed to the service layer,
+            which handles the database interaction.
+            */
+            let saveUser = await this.user.createUser(
+                isValid.id,
+                isValid.name,
+                isValid.email
+            );
+
+
+            /*
+            --------------------------------------------------------------
+            Step 3: Send Success Response
+            --------------------------------------------------------------
+            If user creation succeeds, return HTTP 200 with the
+            saved user document.
             */
             res
                 .status(200)
-                .json(
-                    this.user.createUser(
-                        isValid.id,
-                        isValid.name,
-                        isValid.email
-                    )
-                );
+                .json(saveUser);
 
         } catch (err) {
 
@@ -129,8 +181,7 @@ export class userController {
             --------------------------------------------------------------
             Validation Error Handling
             --------------------------------------------------------------
-            If Zod validation fails, return HTTP 400 (Bad Request)
-            with the validation details.
+            If Zod validation fails, respond with HTTP 400.
             */
             if (err instanceof ZodError) {
                 return res.status(400).json({
@@ -140,9 +191,10 @@ export class userController {
 
             /*
             --------------------------------------------------------------
-            Unexpected Error Handling
+            Unexpected Server Error
             --------------------------------------------------------------
-            Any other error is treated as an internal server error.
+            If any other error occurs (database failure, etc.)
+            return HTTP 500.
             */
             return res.status(500).json({
                 message: "Internal Server Error"
@@ -155,22 +207,45 @@ export class userController {
     |--------------------------------------------------------------------------
     | Get Users Controller
     |--------------------------------------------------------------------------
-    | Handles HTTP GET requests to retrieve all users.
-    |
-    | Request Example:
+    | Endpoint:
     | GET /user
     |
-    | Process:
-    | 1. Call the service layer to retrieve user data
-    | 2. Return the user list as JSON
+    | Purpose:
+    | Retrieve all users stored in the database.
+    |
+    | Execution Flow:
+    |
+    | Client Request
+    |      ↓
+    | Route Layer
+    |      ↓
+    | Controller
+    |      ↓
+    | Service Layer
+    |      ↓
+    | Database Query
+    |      ↓
+    | Response Sent Back to Client
     */
     getUser = async (req: Request, res: Response) => {
+
         try {
 
-            // Fetch user data from the service layer
-            let userlist = this.user.getUser();
+            /*
+            --------------------------------------------------------------
+            Fetch user data from the service layer
+            --------------------------------------------------------------
+            The service handles database communication.
+            */
+            let userlist = await this.user.getUser();
 
-            // Send response back to the client
+
+            /*
+            --------------------------------------------------------------
+            Send Response
+            --------------------------------------------------------------
+            Return the list of users to the client.
+            */
             res.status(200).json(userlist);
 
         } catch (error) {
@@ -179,8 +254,8 @@ export class userController {
             --------------------------------------------------------------
             Error Handling
             --------------------------------------------------------------
-            If something unexpected happens while retrieving users,
-            return a server error response.
+            If any unexpected error occurs while retrieving users,
+            return HTTP 500.
             */
             res.status(500).send(error);
         }
