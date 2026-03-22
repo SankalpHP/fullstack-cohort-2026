@@ -93,6 +93,12 @@ router.get('/', user_Controller.getUser);
 router.post('/', user_Controller.createUser);
 
 
+router.get('/:userId', user_Controller.getUserId);
+
+
+router.delete('/:userId', user_Controller.deleteUser)
+
+
 /*
 |--------------------------------------------------------------------------
 | Export Router

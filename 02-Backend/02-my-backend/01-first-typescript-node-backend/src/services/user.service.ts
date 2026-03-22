@@ -1,21 +1,5 @@
 /*
 |--------------------------------------------------------------------------
-| Import User Type
-|--------------------------------------------------------------------------
-| The CreateUserSchema type is inferred from the Zod validation schema.
-| It ensures that the structure of the user data handled in this service
-| always matches the validated request payload.
-|
-| Benefits:
-| - Strong type safety
-| - Prevents inconsistent user objects in the application
-| - Keeps validation and business logic aligned
-*/
-import { CreateUserSchema } from '../validators/user.validator.js'
-
-
-/*
-|--------------------------------------------------------------------------
 | Import Database Model
 |--------------------------------------------------------------------------
 | The `db` model represents the MongoDB collection defined using
@@ -31,6 +15,7 @@ import { CreateUserSchema } from '../validators/user.validator.js'
 |
 | The service layer communicates with the database through this model.
 */
+import { ObjectId } from 'mongoose';
 import db from '../models/db.schema.js';
 
 
@@ -142,5 +127,101 @@ export class UserService {
         let userList = await db.find().lean();
 
         return userList;
+    }
+
+    /*
+  |--------------------------------------------------------------------------
+  | Get User By ID Method
+  |--------------------------------------------------------------------------
+  | This method retrieves a single user document from the MongoDB
+  | collection using its unique `_id`.
+  |
+  | Parameters:
+  | - id → MongoDB ObjectId (passed as string from controller)
+  |
+  | Process:
+  | 1. Receive the user ID from the controller
+  | 2. Query the database using `findById`
+  | 3. Return the user document if found
+  |
+  | Notes:
+  | - Mongoose automatically converts string → ObjectId internally
+  | - If no user is found, it returns `null`
+  |
+  | Example:
+  | Input  → "65f1a2b3c4d5e6f7g8h9i0"
+  | Output → {
+  |   _id: "...",
+  |   id: 1,
+  |   name: "Sankalp",
+  |   email: "sankalp@gmail.com"
+  | }
+  |
+  | If not found:
+  | Output → null
+  */
+    getUserId = async (id: string) => {
+
+        /*
+        --------------------------------------------------------------
+        Query MongoDB for user by ID
+        --------------------------------------------------------------
+        findById() searches using the `_id` field of the document.
+        */
+        let user = await db.findById(id);
+
+        /*
+        --------------------------------------------------------------
+        Return Result
+        --------------------------------------------------------------
+        Returns:
+        - user object if found
+        - null if no matching document exists
+        */
+        return user;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Delete User By ID Method
+    |--------------------------------------------------------------------------
+    | This method deletes a user document from the MongoDB collection
+    | using its `_id`.
+    |
+    | Parameters:
+    | - id → MongoDB ObjectId (string format)
+    |
+    | Process:
+    | 1. Receive user ID from controller
+    | 2. Use `findByIdAndDelete` to remove the document
+    | 3. Return the deleted document (if found)
+    |
+    | Notes:
+    | - If user exists → document is deleted and returned
+    | - If user does NOT exist → returns null
+    |
+    | Example:
+    | Input  → "65f1a2b3c4d5e6f7g8h9i0"
+    | Output → deleted user object
+    |
+    | If not found:
+    | Output → null
+    |
+    | Important:
+    | This operation is irreversible (data is permanently removed).
+    */
+    deleteUser = async (id: string) => {
+
+        /*
+        --------------------------------------------------------------
+        Delete user from database
+        --------------------------------------------------------------
+        findByIdAndDelete():
+        - Finds a document by _id
+        - Deletes it
+        - Returns the deleted document
+        */
+        return await db.findByIdAndDelete(id)
     }
 }

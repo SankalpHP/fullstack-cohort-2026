@@ -260,4 +260,188 @@ export class userController {
             res.status(500).send(error);
         }
     }
+
+    /*
+  |--------------------------------------------------------------------------
+  | Get User By ID Controller
+  |--------------------------------------------------------------------------
+  | Endpoint:
+  | GET /user/:userId
+  |
+  | Purpose:
+  | Retrieve a single user from the database using the provided ID.
+  |
+  | Request Flow:
+  | Client Request
+  |      ↓
+  | Route Layer
+  |      ↓
+  | Controller (this method)
+  |      ↓
+  | Service Layer
+  |      ↓
+  | MongoDB Query
+  |      ↓
+  | Response sent back to client
+  |
+  | Responsibilities:
+  | - Extract ID from request params
+  | - Validate ID type
+  | - Call service to fetch user
+  | - Return appropriate HTTP response
+  */
+    getUserId = async (req: Request, res: Response) => {
+        try {
+
+            /*
+            --------------------------------------------------------------
+            Extract ID from request parameters
+            --------------------------------------------------------------
+            Example URL:
+            GET /user/64f1a2b3c4d5e6f7g8h9i0
+            */
+            const id = req.params.userId;
+
+
+            /*
+            --------------------------------------------------------------
+            Validate ID
+            --------------------------------------------------------------
+            Ensure the ID is a valid string before proceeding.
+            */
+            if (typeof id !== "string") {
+                return res.status(400).json({ message: "Invalid ID" });
+            }
+
+
+            /*
+            --------------------------------------------------------------
+            Call Service Layer
+            --------------------------------------------------------------
+            Fetch user from database using the provided ID.
+            */
+            const user = await this.user.getUserId(id);
+
+
+            /*
+            --------------------------------------------------------------
+            Handle Success Response
+            --------------------------------------------------------------
+            If user is found, return HTTP 200 with user data.
+            */
+            if (user) {
+                return res.status(200).json(user);
+            }
+
+
+            /*
+            --------------------------------------------------------------
+            Handle Not Found
+            --------------------------------------------------------------
+            If no user exists with the given ID, return HTTP 404.
+            */
+            return res.status(404).send('NOT FOUND!');
+
+        } catch (error) {
+
+            /*
+            --------------------------------------------------------------
+            Error Handling
+            --------------------------------------------------------------
+            Catch unexpected errors (DB issues, runtime errors, etc.)
+            */
+            return res.status(500).send('SOMETHING WRONG HAPPENS!');
+        }
+    }
+
+    /*
+ |--------------------------------------------------------------------------
+ | Delete User Controller
+ |--------------------------------------------------------------------------
+ | Endpoint:
+ | DELETE /user/:userId
+ |
+ | Purpose:
+ | Delete a user from the database using the provided ID.
+ |
+ | Request Flow:
+ | Client Request
+ |      ↓
+ | Route Layer
+ |      ↓
+ | Controller
+ |      ↓
+ | Service Layer
+ |      ↓
+ | MongoDB (delete operation)
+ |      ↓
+ | Response sent back to client
+ |
+ | Responsibilities:
+ | - Extract ID from request params
+ | - Validate ID
+ | - Call service to delete user
+ | - Return appropriate HTTP response
+ */
+    deleteUser = async (req: Request, res: Response) => {
+        try {
+
+            /*
+            --------------------------------------------------------------
+            Extract ID from request parameters
+            --------------------------------------------------------------
+            */
+            let id = req.params.userId;
+
+
+            /*
+            --------------------------------------------------------------
+            Validate ID
+            --------------------------------------------------------------
+            Ensure ID is a valid string before database operation.
+            */
+            if (typeof id !== 'string') {
+                return res.status(400).json({ message: "Invalid ID" });
+            }
+
+
+            /*
+            --------------------------------------------------------------
+            Call Service Layer
+            --------------------------------------------------------------
+            Attempt to delete the user from the database.
+            */
+            const user = await this.user.deleteUser(id);
+
+
+            /*
+            --------------------------------------------------------------
+            Handle Success Response
+            --------------------------------------------------------------
+            If user existed and was deleted, return deleted document.
+            */
+            if (user) {
+                return res.status(200).json(user);
+            }
+
+
+            /*
+            --------------------------------------------------------------
+            Handle Not Found
+            --------------------------------------------------------------
+            If no user exists with the given ID, return HTTP 404.
+            */
+            return res.status(404).send(`No user found with ID:${id}`);
+
+        } catch (error) {
+
+            /*
+            --------------------------------------------------------------
+            Error Handling
+            --------------------------------------------------------------
+            Catch unexpected errors and return HTTP 500.
+            */
+            return res.status(500).send('SOMETHING WRONG HAPPENS!');
+        }
+    }
 }
