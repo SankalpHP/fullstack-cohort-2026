@@ -17,20 +17,43 @@ import app from './app.js';
 
 /*
 |--------------------------------------------------------------------------
-| Define Server Port
+| Import dotenv Package
 |--------------------------------------------------------------------------
-| This specifies the port on which the HTTP server will listen
-| for incoming requests.
+| dotenv is used to load environment variables from a `.env` file
+| into the Node.js process.
 |
-| In real production environments, the port is usually read from
-| environment variables:
+| This allows us to store sensitive or environment-specific data
+| (like database URLs, API keys, ports) outside the source code.
 |
-| const port = process.env.PORT || 3000;
+| Example `.env` file:
 |
-| This allows the application to run on different environments
-| (dev
+| PORT=3000
+| MONGO_URI=mongodb://127.0.0.1/myShop
+|
+| This improves:
+| - Security (no hardcoded secrets)
+| - Flexibility across environments (dev, staging, prod)
 */
-const port:Number = 3000;
+import dotenv from 'dotenv';
+
+
+/*
+|--------------------------------------------------------------------------
+| Load Environment Variables
+|--------------------------------------------------------------------------
+| dotenv.config() reads the `.env` file and loads its variables
+| into `process.env`.
+|
+| After this call, you can access variables like:
+|
+| process.env.PORT
+| process.env.MONGO_URI
+|
+| IMPORTANT:
+| This should be called at the very beginning of the application
+| (before using any environment variables).
+*/
+dotenv.config();
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +72,7 @@ const port:Number = 3000;
 | When the server starts, it prints a message in the console
 | indicating that the API is ready to receive requests.
 */
-app.listen(port,()=>{
+app.listen(process.env.PORT, () => {
     /*
     |--------------------------------------------------------------------------
     | Server Startup Log
@@ -60,5 +83,5 @@ app.listen(port,()=>{
     | Example:
     | http://localhost:3000/user
     */
-    console.log(`The server is running on http://localhost:${port}`)
+    console.log(`The server is running on http://localhost:${process.env.PORT}`)
 });

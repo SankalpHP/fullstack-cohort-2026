@@ -15,6 +15,45 @@
 */
 import mongoose from "mongoose";
 
+/*
+|--------------------------------------------------------------------------
+| Import dotenv Package
+|--------------------------------------------------------------------------
+| dotenv is used to load environment variables from a `.env` file
+| into the Node.js process.
+|
+| This allows us to store sensitive or environment-specific data
+| (like database URLs, API keys, ports) outside the source code.
+|
+| Example `.env` file:
+|
+| PORT=3000
+| MONGO_URI=mongodb://127.0.0.1/myShop
+|
+| This improves:
+| - Security (no hardcoded secrets)
+| - Flexibility across environments (dev, staging, prod)
+*/
+import dotenv from 'dotenv';
+
+
+/*
+|--------------------------------------------------------------------------
+| Load Environment Variables
+|--------------------------------------------------------------------------
+| dotenv.config() reads the `.env` file and loads its variables
+| into `process.env`.
+|
+| After this call, you can access variables like:
+|
+| process.env.PORT
+| process.env.MONGO_URI
+|
+| IMPORTANT:
+| This should be called at the very beginning of the application
+| (before using any environment variables).
+*/
+dotenv.config();
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +80,4 @@ import mongoose from "mongoose";
 | This ensures the database connection is established before
 | the application continues execution.
 */
-export default await mongoose.connect('mongodb://127.0.0.1/myShop');
+export default await mongoose.connect(`${process.env.MONGODB_URI}${process.env.DB_NAME}`);
