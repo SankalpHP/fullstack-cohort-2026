@@ -21,7 +21,7 @@ import express, { type Request, type Response } from "express";
 |
 | The router will later be mounted on the `/user` base path.
 */
-import userRoutes from './routes/user.routes.js'
+import userRoutes from './modules/user/routes/user.routes.js'
 
 
 /*

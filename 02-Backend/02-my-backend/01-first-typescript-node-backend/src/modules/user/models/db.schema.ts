@@ -9,7 +9,7 @@
 | connection here, we ensure that the application uses a single
 | shared database connection.
 */
-import mongoose from "../dbConfig/db.config.js";
+import mongoose from "../../../common/dbConfig/db.config.js";
 
 
 /*
